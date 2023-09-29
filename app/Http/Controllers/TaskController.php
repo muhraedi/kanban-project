@@ -20,6 +20,33 @@ class TaskController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $pageTitle = 'Create Task';
+        return view('tasks.create', ['pageTitle' => $pageTitle]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+                'name' => 'required',
+                'due_date' => 'required',
+                'status' => 'required',
+            ],
+            $request->all()
+        );
+
+        Task::create([
+            'name' => $request->name,
+            'detail' => $request->detail,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
+
     public function edit($id)
     {
         $pageTitle = 'Edit Task';
@@ -31,9 +58,43 @@ class TaskController extends Controller
         ]);
     }
 
-    public function create()
+    public function update(Request $request, $id)
     {
-        $pageTitle = 'Create Task';
-        return view('tasks.create', ['pageTitle' => $pageTitle]);
+        $request->validate(
+            [
+                'name' => 'required',
+                'due_date' => 'required',
+                'status' => 'required',
+            ],
+            $request->all()
+        );
+
+        $task = Task::find($id);
+        $task->update([
+            'name' => $request->name,
+            'detail' => $request->detail,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
+
+    public function delete($id)
+    {
+        $pageTitle = 'Delete Task';
+        $task = Task::find($id);
+
+        return view('tasks.delete', [
+            'pageTitle' => $pageTitle,
+            'task' => $task
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        $task->delete();
+        return redirect()->route('tasks.index');
     }
 }
