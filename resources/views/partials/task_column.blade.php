@@ -8,6 +8,7 @@
         'task' => $task,
         'leftStatus' => $leftStatus,
         'rightStatus' => $rightStatus,
+        'checkedStatus' => $checkedStatus,
       ])
     @endforeach
   </div>

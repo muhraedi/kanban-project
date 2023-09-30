@@ -15,6 +15,7 @@
         'tasks' => $tasks['not_started'],
         'leftStatus' => null,
         'rightStatus' => 'in_progress',
+        'checkedStatus' => 'completed',
       ])
 
       @include('partials.task_column', [
@@ -22,6 +23,7 @@
         'tasks' => $tasks['in_progress'],
         'leftStatus' => 'not_started',
         'rightStatus' => 'in_review',
+        'checkedStatus' => 'completed',
       ])
 
       @include('partials.task_column', [
@@ -29,6 +31,7 @@
         'tasks' => $tasks['in_review'],
         'leftStatus' => 'in_progress',
         'rightStatus' => 'completed',
+        'checkedStatus' => 'completed',
       ])
 
       @include('partials.task_column', [
@@ -36,6 +39,7 @@
         'tasks' => $tasks['completed'],
         'leftStatus' => 'in_review',
         'rightStatus' => null,
+        'checkedStatus' => null,
       ])
     </div>
   </div>
