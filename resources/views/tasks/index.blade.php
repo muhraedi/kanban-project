@@ -7,11 +7,11 @@
     <h1 class="task-list-heading">Task List</h1>
 
     <div class="task-list-task-buttons">
-        <a href="{{ route('tasks.create') }}">
-          <button  class="task-list-button">
-            <span class="material-icons">add</span>Add task
-          </button>
-        </a>
+      <a href="{{ route('tasks.create') }}">
+        <button  class="task-list-button">
+          <span class="material-icons">add</span>Add task
+        </button>
+      </a>
     </div>
 
     <div class="task-list-table-head">
@@ -21,10 +21,15 @@
       <div class="task-list-header-progress">Progress</div>
     </div>
 
+    <form action="{{ route('tasks.moveCompleted') }}" id="task" method="POST" hidden>
+      @method('patch')
+      @csrf
+      <input type="text" name="id" id="ctask">
+    </form>
     @foreach ($tasks as $index => $task)
       <div class="table-body">
         <div class="table-body-task-name">
-          <span class="material-icons @if ($task->status == 'completed') check-icon-completed @else check-icon @endif" >
+          <span onclick="statusCompleted({{ $task->id }})" class="material-icons @if ($task->status == 'completed') check-icon-completed @else check-icon @endif" >
             check_circle
           </span>
           {{ $task->name }}
@@ -53,4 +58,10 @@
         </div>
     @endforeach
   </div>
+  <script>
+    function statusCompleted(id) {
+      document.getElementById("ctask").value = id;
+      document.getElementById("task").submit();
+    }
+  </script>
 @endsection

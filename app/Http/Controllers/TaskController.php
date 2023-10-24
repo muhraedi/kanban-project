@@ -137,4 +137,15 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.progress');
     }
+
+    public function moveCompleted(Request $request)
+    {
+        $data = Task::findOrFail($request->id);
+
+        $data->update([
+            'status' => "Completed",
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
 }
